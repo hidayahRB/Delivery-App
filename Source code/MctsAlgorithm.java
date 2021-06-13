@@ -27,7 +27,7 @@ public class MctsAlgorithm {
         
         policy = new double[level][numOfNode][numOfNode]; //node = no. of customer + depot
         globalPolicy = new double[numOfNode][numOfNode];
-        this.nodeList = nodeList; //integrate nodeList dgn Depot object
+        this.nodeList = nodeList; //nodeList consist of Depot and all Customer objects
 
         depot = (Depot) nodeList.get(0); //edit new
         
