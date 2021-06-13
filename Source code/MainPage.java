@@ -19,6 +19,10 @@ public class MainPage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
+        //GREEDY SEARCH ALGO but still ada receive input from user
+        GreedySearch<Integer> greedyAlgo = new GreedySearch<>();
+        greedyAlgo.runGreedy();
     
+}
 }
