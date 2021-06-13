@@ -12,10 +12,10 @@ public class MctsAlgorithm {
     
     private double[][][] policy;
     private double[][] globalPolicy;
-    private final List<Stop> nodeList; //edit jadi final
+    private final List<Stop> nodeList;
     
     private final int riderCapacity;
-    private final Depot depot; //edit new
+    private final Depot depot;
     
     //variables responsible to terminate the algorithm when time's up
     public static final long startTime = System.nanoTime();
@@ -29,7 +29,7 @@ public class MctsAlgorithm {
         globalPolicy = new double[numOfNode][numOfNode];
         this.nodeList = nodeList; //nodeList consist of Depot and all Customer objects
 
-        depot = (Depot) nodeList.get(0); //edit new
+        depot = (Depot) nodeList.get(0);
         
         this.riderCapacity = riderCapacity;
     }
@@ -137,7 +137,7 @@ public class MctsAlgorithm {
             //Do operation using last route and last stop
             Stop currentStop = getLastStop(new_tour.getLastRouteInTour());
             
-            //if no available possible next stop for currentStop
+            //check if no available possible next stop for currentStop
             if(isAllPossibleNextStopChecked()){
                 
                     //current route is completed and should return to depot
@@ -148,25 +148,23 @@ public class MctsAlgorithm {
                     if(isAllStopVisited())
                         break;  // rollout process is done
 
-                    //add new route into new_tour  // else add new vehicle, again start at depot with ID 0
-                    insertNewRoute(new_tour); //kena ada rider class
+                    //add new route into new_tour or in real sense, add new vehicle, again start at depot with ID 0
+                    insertNewRoute(new_tour);
                     currentRouteCapacity = 0;
 
-                    //reset check status for unvisited-stop for next route
+                    //reset check status for unvisited-stop to be used for next route search
                     resetCheckStatus();
                     
                     continue;  // skip to next loop to continue search a route for new vehicle               
             }
-
-            //find every possible successors that is not yet checked for currentStop
             
-            //get possible move(s) for this stop (unvisited-stop && not-checked-stop && beside currentStop)
+            //get possible move(s) for this stop (unvisited-stop && not-checked-stop && not same with currentStop)
             ArrayList<Stop> possible_move = findPossibleSuccessor(currentStop, nodeList);
 
             //retrieve possible next stop
             Stop nextStop = select_next_move(currentStop, possible_move);
             
-            //if add nextStop to currentRoute does not violate any rules //kena ada rider class
+            //if add nextStop to currentRoute does not violate any rules (capacity limit of rider)
             if(currentRouteCapacity + nextStop.getCapacity() <= riderCapacity){
                 
                 //add nextStop to current route
@@ -267,7 +265,7 @@ public class MctsAlgorithm {
     private void insertNewRoute(Tour tour){
         ArrayList<Stop> stopList = new ArrayList<>();
         
-        //add depot at the front of stopList, nodeList[0] is always depot
+        //add depot at the front of stopList
         stopList.add(depot);
         
         //set visited status for depot to true, to avoid bug
