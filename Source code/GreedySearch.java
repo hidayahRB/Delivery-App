@@ -1,5 +1,3 @@
-package DeliveryApp;
-
 import java.util.Scanner;
 
 public class GreedySearch<E>{
@@ -28,7 +26,7 @@ public class GreedySearch<E>{
 
         custIDunderC.clear();                       // to reset the list back to 0
         for(int i=0; i<customerID.size(); i++){
-            if(customers.get(customerID.get(i)).capacity < C){
+            if(customers.get(customerID.get(i)).capacity <= C){
                 custIDunderC.addLast(customerID.get(i));
             }
         }

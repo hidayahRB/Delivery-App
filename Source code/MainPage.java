@@ -7,7 +7,7 @@ public class MainPage {
         // Choose whether Admin or Customer 
         
         // Reading input from text file
-        File file = new File("sample1.txt");
+        File file = new File("./Instances/sample1.txt");
  
         try (BufferedReader br = new BufferedReader(new FileReader(file)))
         {
@@ -24,5 +24,5 @@ public class MainPage {
         GreedySearch<Integer> greedyAlgo = new GreedySearch<>();
         greedyAlgo.runGreedy();
     
-}
+    }
 }
