@@ -110,10 +110,8 @@ public class BFS {
                 Node nextCustomer = getNearestNextCustomer(element, neighbours);
                 
                 if(isNodeQualifiedToBeAdded(nextCustomer, currentUsedCapacity)){
-//                    System.out.println("Node " + nextCustomer.getID() + " qualified");
 
                     currentUsedCapacity += nextCustomer.getCapacity();
-//                    System.out.println("currentUsedCapacity : " + currentUsedCapacity);
 
                     queue.add(nextCustomer); //update queue for BFS
                     
@@ -136,8 +134,6 @@ public class BFS {
                 routeOutput += "Route " + routeCounter + "\n" + newRoute;
 
                 tourCost += newRoute.getRouteCost();
-                
-//                System.out.println("New Route");
                 
                 //search from depot (id 0) again, new route
                 queue.add(depot);
@@ -209,7 +205,7 @@ public class BFS {
         return true;
     }
     
-    //disebabkan search always start from depot (id 0), next node mesti Customer, hence nama method ni getNearestNextCustomer
+    //as search always start from depot (id 0), next node must be Customer, hence the method name: getNearestNextCustomer
     private Node getNearestNextCustomer(Node currentNodeForCheck, List<Node> neighbourList){
         Node nearestNextCustomer = null;
         double dummyForComparison = Integer.MAX_VALUE;
@@ -224,52 +220,12 @@ public class BFS {
             }
         }
         
-//        System.out.println("Nearest Customer for Node " + currentNodeForCheck.getID() + " : " + nearestNextCustomer.getID());
-        
         return nearestNextCustomer;
     }
     
     private boolean isNodeQualifiedToBeAdded(Node nextNodeForCheck, int currentUsedCapacity){
         return (currentUsedCapacity + nextNodeForCheck.getCapacity()) <= riderCapacity;
     }
-    
-//    public static void main(String arg[])
-//    {
-//        
-//        ArrayList<Node> nodeList = new ArrayList<>();
-//        nodeList.add(new Node(new Depot(147, 103, 0)));
-//        nodeList.add(new Node(new Customer(111,98,7)));
-//        nodeList.add(new Node(new Customer(87,176,16)));
-//        nodeList.add(new Node(new Customer(118,98,15)));
-//        nodeList.add(new Node(new Customer(69,168,5)));
-//        nodeList.add(new Node(new Customer(72,84,19)));
-//        nodeList.add(new Node(new Customer(35,79,21)));
-//        nodeList.add(new Node(new Customer(25,115,4)));
-//        nodeList.add(new Node(new Customer(79,139,8)));
-//
-//        constructCompleteUndirectedGraph(nodeList);
-//        
-//        Node depot = nodeList.get(0);
-//        int riderCapacity = 21;
-//        
-//        System.out.println("The BFS traversal of the graph is \n");
-//        
-//        new BFS(depot, riderCapacity);
-//        
-//    }
-//     
-//    private static void constructCompleteUndirectedGraph(List<Node> nodeList){
-//        
-//        for(Node node : nodeList){
-//            
-//            for(Node neighbourNode : nodeList){
-//                if(neighbourNode.equals(node)) continue;
-//                
-//                node.addneighbours(neighbourNode);
-//            }
-//            
-//        }
-//        
-//    }
+
 }
 
