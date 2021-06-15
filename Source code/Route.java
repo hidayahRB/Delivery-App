@@ -8,6 +8,10 @@ public class Route {
     private double routeCost;
     private int capacity;
 
+    public Route() {
+        stopList = new ArrayList<>();
+    }
+    
     public void addStopToRoute(Stop newStop){
         
         //every time add stop to route, update cost immediately
