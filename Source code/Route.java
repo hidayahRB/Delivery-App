@@ -1,5 +1,3 @@
-package deliveryscheduler;
-
 import java.util.ArrayList;
 
 public class Route {
@@ -15,6 +13,23 @@ public class Route {
         //every time add stop to route, update cost immediately
         routeCost += getLastStop().calculateCost(newStop.x, newStop.y);
         stopList.add(newStop);
+    }
+    
+    @Override
+    public String toString(){
+        String str = "";
+        
+        for (int i = 0; i < stopList.size(); i++) {
+            if(i == 0) str += "" + stopList.get(i).getID();
+            
+            else{
+                str += " -> " + stopList.get(i).getID();
+            }
+        }
+        
+        str += "\nCapacity: " + capacity + "\nRoute cost: " + routeCost + "\n\n";
+        
+        return str;
     }
     
     //Getter and Setter method
