@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//hati2, algo run dengan betul bila program jalan sekali harung je, kalau ulang2, kena edit static tuu
+//Class used to run MCTS Algorithm by invoking search(level, iterations) method to get best tour
 public class MctsAlgorithm {
     
     private final int ALPHA = 1;
@@ -36,15 +36,14 @@ public class MctsAlgorithm {
     
     /**
     * Input Parameters
-    * level: int, refer README.md for more info
-    * iterations: int, refer README.md for more info
+    * level: int
+    * iterations: int
     * @param [level]
     * @return a_tour
-    * a_tour: class object, convey information about tour cost, all routes and etc. (depend on you)
     */
     public Tour search(int level, int iteration){
         Tour best_tour = new Tour();
-        best_tour.setTourCost((double) Integer.MAX_VALUE); //set high value untuk mudahkan comparison nnti
+        best_tour.setTourCost((double) Integer.MAX_VALUE); //set high value to ease comparison later
         
         if( (level-1) == 0){
 
@@ -82,10 +81,8 @@ public class MctsAlgorithm {
     
     /**
     * Input Parameters
-    * a_tour: class object, convey information about tour cost, all routes and etc. (depend on you)
-    * level: int, refer README.md for more info
-    * Return Type
-    * No object returned (void)
+    * a_tour: Tour object that contain information about tour cost and all routes
+    * level: int
     */
     private void adapt(Tour a_tour, int level) {
         
@@ -123,12 +120,10 @@ public class MctsAlgorithm {
         }   
     }
     
-    /**
-    * There is no parameters (input) nor object returned
-    */
+    //Method used to generate new tour
     private Tour rollout () {
         
-        Tour new_tour = new Tour(); //with first route with first stop at 0, every route must start and end at depot (ID=0)
+        Tour new_tour = new Tour(); //with first route with first stop at depot (ID=0), every route must start and end at depot (ID=0)
         insertNewRoute(new_tour);
         
         int currentRouteCapacity = 0; //get track of capacity value for every stop inserted to route
@@ -148,7 +143,7 @@ public class MctsAlgorithm {
                     if(isAllStopVisited())
                         break;  // rollout process is done
 
-                    //add new route into new_tour or in real sense, add new vehicle, again start at depot with ID 0
+                    //add new route into new_tour, again start at depot with ID 0
                     insertNewRoute(new_tour);
                     currentRouteCapacity = 0;
 
@@ -164,7 +159,7 @@ public class MctsAlgorithm {
             //retrieve possible next stop
             Stop nextStop = select_next_move(currentStop, possible_move);
             
-            //if add nextStop to currentRoute does not violate any rules (capacity limit of rider)
+            //if add nextStop to currentRoute does not exceed capacity limit of rider
             if(currentRouteCapacity + nextStop.getCapacity() <= riderCapacity){
                 
                 //add nextStop to current route
@@ -203,12 +198,12 @@ public class MctsAlgorithm {
 
     /**
     * Input Parameters
-    * currentStop: depend, it can be an int or node class as long as it convey information about what is your current node 
-    * possible_successors: depend, it can be a list of int or list of node class objects as long as it convey information about what is the possible move from your current node
-    * [More explanations] let say I want search from A to B or C or D, then my currentStop is A, and if B is searched/checked and it is impossible to be next node of A anymore,
+    * currentStop: Stop object that convey information about what is the current node (either Depot or Customer) 
+    * possible_successors: List object that convey information about what is the possible move from your current node
+    * [More explanations] Let say we want search from A to B or C or D, then our currentStop is A, and if B is searched/checked and it is impossible to be next node of A anymore,
     * then my possible_successors are C and D only. The 1d probability array will then be an double array of size 2 (2 possible nodes C and D).
     * Return Type
-    * selected_successor: depend, it can be an int or node class as long as it convey information about what is the node selected to move next from current node
+    * selected_successor: Stop object that convey information about what is the node selected to move after current node
     */
     private Stop select_next_move(Stop currentStop, List<Stop> possible_successors) {
         //initialize 1d probability array that have same size with possible_successors
@@ -268,7 +263,7 @@ public class MctsAlgorithm {
         //add depot at the front of stopList
         stopList.add(depot);
         
-        //set visited status for depot to true, to avoid bug
+        //set visited status for depot to true
         depot.setVisited(true);
         
         Route newRoute = new Route();
