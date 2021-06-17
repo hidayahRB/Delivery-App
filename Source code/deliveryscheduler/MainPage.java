@@ -47,7 +47,7 @@ public class MainPage {
         //GREEDY SEARCH ALGO but still receiving input from user when running
         else if(choice == 2){
             GreedySearch<Integer> greedyAlgo = new GreedySearch<>();
-            greedyAlgo.runGreedy();
+            greedyAlgo.runGreedyFileIn();
         }
         
         else if(choice == 3){

@@ -1,5 +1,9 @@
 package deliveryscheduler;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class GreedySearch<E>{
@@ -231,6 +235,75 @@ public class GreedySearch<E>{
 
             addCustomer(toInteger[0], toInteger[1], toInteger[2]);
 
+        }
+        
+        while(getNumberOfCustomers() != 0){
+
+            findCustUnderC();
+
+            findNearestCust();
+    
+            updateCapacity();
+
+        }
+        
+        System.out.println("Cost: " + getVehicleCost());
+        System.out.println("");
+        
+        displayRoute();
+        
+        System.out.println("Tour cost: "+ getTourCost());
+        System.out.println("");
+
+        sc.close();
+    }
+
+
+    public void runGreedyFileIn(){
+        int lineNum = 1;
+        Scanner sc = new Scanner (System.in);
+
+        System.out.println("");
+        System.out.println("GREEDY SEARCH");
+        System.out.println("");
+
+        File file = new File("./Instances/sample3.txt");
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(file)))
+        {
+            String line;
+            
+            while ((line = br.readLine()) != null) {
+                
+                String trimmedInput = line.trim();
+                String[] inputArr= trimmedInput.split(" ");
+
+                if(lineNum==1){
+                    int n = Integer.parseInt(inputArr[0]);
+                    int c = Integer.parseInt(inputArr[1]);
+                    setCapacity(c);
+                }
+
+                else if (lineNum==2){
+                    int x = Integer.parseInt(inputArr[0]);
+                    int y = Integer.parseInt(inputArr[1]);
+                    int capacity = Integer.parseInt(inputArr[2]);
+                    setDepot(x, y, capacity);
+                }
+                
+                else{
+                    int x = Integer.parseInt(inputArr[0]);
+                    int y = Integer.parseInt(inputArr[1]);
+                    int capacity = Integer.parseInt(inputArr[2]);
+                    addCustomer(x, y, capacity);
+                }
+                
+                lineNum++;
+            }
+            
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         
         while(getNumberOfCustomers() != 0){
