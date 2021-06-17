@@ -1,3 +1,5 @@
+package deliveryscheduler;
+
 import java.util.Scanner;
 
 public class GreedySearch<E>{

@@ -1,3 +1,5 @@
+package deliveryscheduler;
+
 import deliveryscheduler.BFS.Node;
 import java.io.BufferedReader;
 import java.io.File;
@@ -67,7 +69,7 @@ public class MainPage {
     
     public static int loadInputForBasicSimulation(ArrayList<Node> nodeList){
         // Reading input from text file
-        File file = new File("src/deliveryscheduler/sample1.txt");
+        File file = new File("./Instances/sample1.txt");
  
         int riderCapacity = 0;
         
@@ -127,7 +129,7 @@ public class MainPage {
     
     public static int loadInputForMCTSAlgo(ArrayList<Stop> nodeList){
         // Reading input from text file
-        File file = new File("src/deliveryscheduler/sample1.txt");
+        File file = new File("./Instances/sample1.txt");
  
         int riderCapacity = 0;
         

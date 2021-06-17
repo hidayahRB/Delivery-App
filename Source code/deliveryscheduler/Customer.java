@@ -1,3 +1,5 @@
+package deliveryscheduler;
+
 public class Customer extends Stop{
     
     //count id start from 1, increment for every Customer object we create

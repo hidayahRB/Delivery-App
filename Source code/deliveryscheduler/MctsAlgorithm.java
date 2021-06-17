@@ -1,6 +1,6 @@
 package deliveryscheduler;
 
-import static deliveryscheduler.DeliveryScheduler.output;
+import static deliveryscheduler.MainPage.output;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -333,7 +333,7 @@ public class MctsAlgorithm {
                 int timeCounter = 0;
                 
                 //get output as expected
-                synchronized(DeliveryScheduler.output){
+                synchronized(deliveryscheduler.MainPage.output){
                 
                     output.print("Time taken : " + timeCounter++ + "s");
                     

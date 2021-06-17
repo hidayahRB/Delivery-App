@@ -1,4 +1,4 @@
-package delivery_app;
+package deliveryscheduler;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
