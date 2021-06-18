@@ -87,46 +87,67 @@ public class BFS {
     
     private void bfs(Node depot)
     {
+        // We implement queue in this method
         queue.add(depot);
+        // we set depot node as visited
         depot.setVisited(true);
-        
+        // initialize the route is null
         Route newRoute = null;
-        
+        // initialize that there are no nodes qualified yet
         boolean isAnyNodeQualified = false;
+        // initialize the current used capacity of rider is still 0
         int currentUsedCapacity = 0;
-        
+        // and lastly there are no best route suggested yet 
         int routeCounter = 0;
         
+        // As the program does not visited all the group yet 
         while ( !isAllNodeVisited() ) {
- 
+            // we assign node element to call an element from the queue
             Node element = queue.remove();
-            if(element.getID() == 0) newRoute = initiateNewRoute();
-            else newRoute.addStopToRoute(element.data);
             
+            if(element.getID() == 0) {
+                // if the ID is 0 = depot 
+                // we initiate new route
+                newRoute = initiateNewRoute();
+            }else{
+                // if its not the depot
+                // straight to add stop in the route
+                newRoute.addStopToRoute(element.data);
+            }
+            // assign Node neighbour and get neighbour from node element 
             List<Node> neighbours = element.getNeighbours();
-            
+            // as the program does not yet check all the neighbours from the first stop 
             while(!isAllNeighbourChecked(neighbours)){
-                
+                // the program get the nearest customer from depot by performing a certain calculation 
+                // go to getNearestNextCustomer() method
                 Node nextCustomer = getNearestNextCustomer(element, neighbours);
                 
-                if(isNodeQualifiedToBeAdded(nextCustomer, currentUsedCapacity)){
-
-                    currentUsedCapacity += nextCustomer.getCapacity();
-
-                    queue.add(nextCustomer); //update queue for BFS
+                if(isNodeQualifiedToBeAdded(nextCustomer, currentUsedCapacity)){ 
+                    // How we check whether the customer is qualified or not to be added?
+                    // We check whether the total of currentUsedCapacity + nextNodeForCheck.getCapacity()) <= riderCapacity
+                    // go to the isNodeQualifiedToBeAdded() method
+                    // so if it's TRUE if statement is ran
                     
+                    // So in this statement the program update the currentUsedCapasity,
+                    currentUsedCapacity += nextCustomer.getCapacity();
+                    // add the nextCustomer in the queue,
+                    queue.add(nextCustomer); //update queue for BFS
+                    // lastly set this nextCustomer as visited
                     nextCustomer.setVisited(true);
                     isAnyNodeQualified = true;
-                    
+                    // after this it will break this current while loop
                     break;
                 }
                 else{
+                    // if the if statement is false, then proceed to check the next customer
                     nextCustomer.setChecked(true);
                 }
             }
             
-            //Route capacity already at maximum or all node already visited
+            // When the route capacity already at maximum or all node were already visited
+            // the program should run this if statement only when isAnyNodeQualified = false when the capacity of rider already exceed maximum capacity
             if(isAnyNodeQualified == false){
+                // the route will return back to depot and generate new route
                 backToDepot(newRoute);
                 newRoute.setCapacity(currentUsedCapacity);
                 routeCounter++;
@@ -139,13 +160,14 @@ public class BFS {
                 queue.add(depot);
                 currentUsedCapacity = 0;
             }
-            
+            // the program will reset this method and variable
             resetCheckStatusForUnvisitedNode(neighbours);
             isAnyNodeQualified = false;
         }
         
-        //if loop end before adding the last 'nextCustomer' to route (should be at line 103)
+        //if while loop isAllNeighbourChecked() end before adding the last 'nextCustomer' to route (should be at line 103)
         if(!queue.isEmpty()){
+            // the program will just add the LAST customer to the route
             Node element = queue.remove();
             newRoute.addStopToRoute(element.data);
         }
@@ -162,16 +184,21 @@ public class BFS {
 
         
         System.out.println("Tour cost : " + tourCost + "\n");
+        // program print out the route output
         System.out.print(routeOutput);
 
     }
     
+    // method to go back to depot 
     private void backToDepot(Route currentRouteSearched){
+        // add depot as the next stop after the last customer in each generated route 
         currentRouteSearched.addStopToRoute(firstNode.data);
     }
     
+    // method to initiate a new route
     private Route initiateNewRoute(){
         Route newRoute = new Route();
+        // the route must always starts from depot location
         newRoute.getStopList().add( (Depot) firstNode.data);
         
         return newRoute;
